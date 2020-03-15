@@ -19,8 +19,8 @@
 #define ESP32
 
 const char*    ssid     = "U+NetB277";   //  wifi ssid
-const char*    password = "32F2021315";  //  wifi password
-IPAddress      server(192,168,219,109);  //  Set the rosserial socket server IP address
+const char*    password = "32F200000";  //  wifi password
+IPAddress      server(192,100,100,120);  //  Set the rosserial socket server IP address
 const uint16_t serverPort = 11411;      // Set the rosserial socket server port
 
 /*******************************************************************************

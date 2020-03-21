@@ -214,7 +214,7 @@ void publishRangeMsg(void)
   range_left_msg.radiation_type = sensor_msgs::Range::INFRARED;
   range_left_msg.field_of_view = 0.436332;  // 25 degree FOV -> 0.436332 rad
   range_left_msg.min_range = 0;  // 0 meter
-  range_left_msg.max_range = 2;  // 2 meter
+  range_left_msg.max_range = ((float)edubot.tof_L.signal_rate);  // data chang singal_rate data
   range_left_msg.range = ((float)edubot.tof_L.distance_mm / 1000); // meter
   range_left_pub.publish(&range_left_msg);
 
@@ -223,7 +223,7 @@ void publishRangeMsg(void)
   range_right_msg.radiation_type = sensor_msgs::Range::INFRARED;
   range_right_msg.field_of_view = 0.436332;  // 25 degree FOV -> 0.436332 rad
   range_right_msg.min_range = 0;  // 0 meter
-  range_right_msg.max_range = 2;  // 2 meter
+  range_right_msg.max_range = ((float)edubot.tof_R.signal_rate);  // data chang singal_rate data
   range_right_msg.range = ((float)edubot.tof_R.distance_mm /1000); // meter  
   range_right_pub.publish(&range_right_msg);
 }

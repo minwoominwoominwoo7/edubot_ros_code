@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+################################################################################
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+################################################################################
+
+import rospy, roslaunch
+import numpy as np
+import subprocess
+import os
+import sys
+from enum import Enum
+from std_msgs.msg import UInt8
+from sensor_msgs.msg import LaserScan, Range 
+ 
+class ScanDummy():
+    def __init__(self):
+
+        # publishes orders
+        self.scan_pub = rospy.Publisher('scan', LaserScan, queue_size=50)
+        self.is_triggered = True
+
+        loop_rate = rospy.Rate(10) # 10hz
+        while not rospy.is_shutdown():
+            if self.is_triggered == True:
+                self.fnControlNode()            
+            loop_rate.sleep()
+
+    def fnControlNode(self): 
+
+        num_readings = 25
+        laser_frequency = 10
+        M_PI = 3.141592654
+
+        scan = LaserScan()
+        scan.header.stamp = rospy.Time.now()
+        scan.header.frame_id = 'base_scan'
+        scan.angle_increment = 2.0*M_PI/360.0
+        scan.angle_min = -25*M_PI/180/2 # 25 degree Fov
+        scan.angle_max = 25*M_PI/180/2 - scan.angle_increment   # 25 degree Fov   
+        scan.time_increment = 1.0 / laser_frequency / num_readings #motor_speed/good_sets/1e8;
+        scan.range_min = 0.01  # 0.01 meter 
+        scan.range_max = 0.5    # 1 meter
+        scan.ranges = []
+        scan.intensities = []        
+
+        for i in range(0, num_readings):
+            scan.ranges.append(float('inf'))  
+            scan.intensities.append(0)   
+
+        self.scan_pub.publish(scan) 
+        #rospy.loginfo("left %.2f ( %.2f )   right %.2f ( %.2f ) ", 
+        #          self.rangeLeft , self.rangeLeftSignalRate , self.rangeRight, self.rangeRightSignalRate)         
+
+    def main(self):
+        rospy.spin()
+
+if __name__ == '__main__':
+    rospy.init_node('ScanDummy')
+    node = ScanDummy()
+    node.main()

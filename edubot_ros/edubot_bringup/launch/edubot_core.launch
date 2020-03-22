@@ -1,0 +1,9 @@
+<launch>
+  <arg name="multi_robot_name" default=""/>
+
+  <node pkg="rosserial_python" type="serial_node.py" name="edubot_core" output="screen">
+    <param name="port" value="tcp"/>
+    <param name="tf_prefix" value="$(arg multi_robot_name)"/>
+  </node>
+  
+</launch>

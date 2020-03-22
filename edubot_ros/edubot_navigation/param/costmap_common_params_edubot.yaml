@@ -1,0 +1,23 @@
+
+
+footprint: [[-0.02, -0.03], [-0.02, 0.03], [0.04, 0.03], [0.04, -0.03]]
+#robot_radius: 0.105
+map_type: costmap
+
+inflation_layer:
+  inflation_radius: 1.0
+  cost_scaling_factor: 3.0
+
+obstacle_layer:
+  #obstacle_range: 3.0
+  obstacle_range: 0.5
+  #raytrace_range: 3.5  
+  raytrace_range: 0.5
+  observation_sources: scan
+  scan: {sensor_frame: base_scan, data_type: LaserScan, topic: scan, marking: true, clearing: true}
+
+#range_sensor_layer:
+#  clear_threshold:    0
+#  mark_threshold:     0.8
+#  clear_on_max_reading: true
+#  topics: ["/range_left", "/range_right"]

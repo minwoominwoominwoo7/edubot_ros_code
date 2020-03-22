@@ -1,0 +1,5 @@
+<launch>
+  <!-- edubotteleop_key already has its own built in velocity smoother -->
+  <node pkg="edubot_teleop" type="edubot_teleop_key" name="edubot_teleop_keyboard"  output="screen">
+  </node>
+</launch>
